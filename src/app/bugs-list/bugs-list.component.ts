@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Button } from 'protractor';
+import { Bugs } from '../bugs';
 import { RestService } from '../rest.service';
+
 
 @Component({
   selector: 'app-bugs-list',
@@ -8,7 +10,10 @@ import { RestService } from '../rest.service';
   styleUrls: ['./bugs-list.component.scss']
 })
 export class BugsListComponent implements OnInit {
-  private _bugs = [];
+  //private _bugs = [];
+  private _bugs: Bugs;
+//  private bugs: Bugs;
+
   private ascending: boolean = true;
   private filterBy = 'title';
   
