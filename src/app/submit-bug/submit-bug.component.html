@@ -1,4 +1,39 @@
 
 
-<button type="button" class="btn btn-secondary ml-2 mt-3" routerLink="">Back</button>
+<button type="button" class="btn btn-secondary ml-2 mt-3" [routerLink]="''">Back</button>
 <h1 class="text-center"> Submit new bug</h1>
+<!--(submit)="formSubmit()"-->
+<form [formGroup]= "myForm"   >
+    <div class="text-center">
+    <div class="mt-5">
+        <label>Title  </label><br>
+        <input formControlName="title" type="text">
+        <div *ngIf="myForm.get('firstName').invalid">
+            Field is required
+        </div>
+    </div>
+    <div class="mt-5">
+        <label>Description </label><br>
+        <input formControlName="description" type="text">
+    </div>
+
+    <div class = "mt-5">
+        <label>Priority </label><br>
+        <select formControlName="priority">
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let choice1 of priority">
+            {{choice1}}
+            </option>
+           </select>
+           
+
+
+    </div>
+    
+
+
+
+
+
+    </div>
+</form>
