@@ -7,26 +7,52 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./submit-bug.component.scss']
 })
 export class SubmitBugComponent implements OnInit {
+  
 
   constructor() { }
 
 myForm:FormGroup; 
   
+
+  priorities=[
+    "Minor","Major", "Critical"
+  ]
+
+  reporters=[
+    "QA","PO","DEV"
+  ]
+
+  statuses=[
+    "Ready for testing", "Done", "Rejected"
+  ]
+
+
   ngOnInit(): void {
     this.myForm = new FormGroup({
       title:new FormControl("", Validators.required),
       description: new FormControl("", Validators.required),
-      priority: new FormControl("", Validators.required),
-      reporter:new FormControl("", Validators.required),
-      status: new FormControl("", Validators.required)
+      priority: new FormControl(this.priorities, Validators.required),
+      reporter:new FormControl(this.reporters, Validators.required),
+      status: new FormControl(this.statuses)
     });
+
+  this.myForm.get('reporter').valueChanges.subscribe((value)=>{
+    if (value=== 'QA'){
+      this.myForm.get('status').setValidators(Validators.required)
+    }else{
+      this.myForm.get('status').clearValidators()
+    }
+    this.myForm.get('status').updateValueAndValidity()
+  })
 
 
   }
-  /*formSubmit(){
-    if(!this.formSubmit.valid){
+
+  
+  formSubmit(){
+    if(!this.myForm.valid){
       return;
     }
-    console.log(this.formSubmit.value);
-  }*/
+    console.log(this.myForm.value);
+  }
 }

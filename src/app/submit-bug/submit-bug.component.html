@@ -2,38 +2,63 @@
 
 <button type="button" class="btn btn-secondary ml-2 mt-3" [routerLink]="''">Back</button>
 <h1 class="text-center"> Submit new bug</h1>
-<!--(submit)="formSubmit()"-->
-<form [formGroup]= "myForm"   >
+
+<form [formGroup]= "myForm" (submit)="formSubmit()">
     <div class="text-center">
-    <div class="mt-5">
+    <div class="mt-4" >
         <label>Title  </label><br>
         <input formControlName="title" type="text">
-        <div *ngIf="myForm.get('firstName').invalid">
+        <div class= "warning" *ngIf="myForm.get('title').invalid && myForm.get('title').dirty">
             Field is required
         </div>
     </div>
-    <div class="mt-5">
-        <label>Description </label><br>
+    <div class="mt-4">
+        <label>Description  </label><br>
         <input formControlName="description" type="text">
+        <div class= "warning"*ngIf="myForm.get('description').invalid && myForm.get('description').dirty" >
+            Field is required
+        </div>
     </div>
 
-    <div class = "mt-5">
+    <div class = "mt-4">
         <label>Priority </label><br>
         <select formControlName="priority">
             <option [ngValue]="null">Select</option>
-            <option *ngFor="let choice1 of priority">
-            {{choice1}}
-            </option>
+            <option *ngFor="let priority of priorities" [ngValue]="priority">
+                {{priority}}
+            </option> 
            </select>
-           
-
-
+           <div class= "warning" *ngIf="myForm.get('priority').invalid && myForm.get('priority').dirty">
+                Field is required
+            </div>
     </div>
-    
-
-
-
-
-
+    <div class = "mt-4">
+        <label>Reporter </label><br>
+        <select formControlName="reporter">
+            <option [ngValue]="null">Select</option>
+            <option *ngFor="let reporter of reporters" [ngValue]="reporter">
+                   {{reporter}}
+            </option>
+            </select>
+            <div class= "warning" *ngIf="myForm.get('reporter').invalid && myForm.get('reporter').dirty">
+                Field is required
+            </div>
+    </div>
+    <div class = "mt-4">
+            <label>Status </label><br>
+            <select formControlName="status">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let status of statuses" [ngValue]="status">
+                   {{status}}
+                </option>
+            </select>
+            <div class= "warning" *ngIf="myForm.get('status').invalid && myForm.get('status').dirty">
+                Field is required
+            </div>
+    </div>
     </div>
 </form>
+
+<pre>
+    {{myForm.value | json}}
+</pre>
