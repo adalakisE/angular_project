@@ -8,6 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class SubmitBugComponent implements OnInit {
   
+  
 
   constructor() { }
 
@@ -45,14 +46,8 @@ myForm:FormGroup;
     this.myForm.get('status').updateValueAndValidity()
   })
 
-
   }
 
+ 
   
-  formSubmit(){
-    if(!this.myForm.valid){
-      return;
-    }
-    console.log(this.myForm.value);
-  }
 }

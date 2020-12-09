@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Bugs } from './bugs';
 
 @Injectable({
+  
   providedIn: 'root'
 })
 export class RestService {
@@ -18,7 +19,15 @@ export class RestService {
     return this.http.get<Bugs>(query);
   }
 
-  postBugs(){
+
+  /*submitForm(){
+    if(!this.myForm.valid){
+      return;
+    }
+    console.log(this.myForm.value);
+    return this.http.post
     
-  }
+  }*/
+  
+  
 }
