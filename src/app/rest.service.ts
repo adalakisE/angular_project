@@ -20,6 +20,10 @@ export class RestService {
   }
 
 
+  addBug(bug:Bugs): Observable<Bugs>{
+    return this.http.post<Bugs>(this.endpoint,bug);
+  }
+
   /*submitForm(){
     if(!this.myForm.valid){
       return;

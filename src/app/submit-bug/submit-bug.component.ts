@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Bugs } from '../bugs';
+import { RestService } from '../rest.service';
 
 @Component({
   selector: 'app-submit-bug',
@@ -10,14 +12,16 @@ export class SubmitBugComponent implements OnInit {
   
   
 
-  constructor() { }
+  constructor(private restService:RestService) { }
 
 myForm:FormGroup; 
   
 
-  priorities=[
-    "Minor","Major", "Critical"
-  ]
+  priorities=new Map([
+    [ "Minor", 1 ],
+    [ "Major", 2 ],
+    [ "Critical", 3 ]
+  ]);
 
   reporters=[
     "QA","PO","DEV"
@@ -30,12 +34,21 @@ myForm:FormGroup;
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
-      title:new FormControl("", Validators.required),
+      title:new FormControl(" ", Validators.required),
       description: new FormControl("", Validators.required),
       priority: new FormControl(this.priorities, Validators.required),
       reporter:new FormControl(this.reporters, Validators.required),
       status: new FormControl(this.statuses)
     });
+  this.myForm.get('reporter').patchValue(null)
+  this.myForm.get('status').patchValue(null)
+  this.myForm.get('priority').patchValue(null)
+  
+
+  
+
+  
+
 
   this.myForm.get('reporter').valueChanges.subscribe((value)=>{
     if (value=== 'QA'){
@@ -48,6 +61,15 @@ myForm:FormGroup;
 
   }
 
- 
+  submitForm(){
+    if(!this.myForm.valid){
+      return;
+    }
+    console.log(this.myForm.value);
+    let bug:Bugs= this.myForm.value
+    this.restService.addBug(bug).subscribe((result)=>{
+      console.log(result);
+    });
+  }
   
 }

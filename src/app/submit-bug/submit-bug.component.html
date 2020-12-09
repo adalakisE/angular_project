@@ -3,7 +3,7 @@
 <button type="button" class="btn btn-secondary ml-2 mt-3" [routerLink]="''">Back</button>
 <h1 class="text-center"> Submit new bug</h1>
 <!--(submit)="submitForm()"-->
-<form [formGroup]= "myForm" >
+<form [formGroup]= "myForm" (submit)="submitForm()">
     <div class="text-center">
     <div class="mt-4" >
         <label>Title  </label><br>
@@ -23,9 +23,10 @@
     <div class = "mt-4">
         <label>Priority </label><br>
         <select formControlName="priority">
-            <option [ngValue]="null">Select</option>
-            <option *ngFor="let priority of priorities" [ngValue]="priority">
-                {{priority}}
+            
+            <option [ngValue]="null" selected>Select</option>
+            <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
+                {{priority.key}}
             </option> 
            </select>
            <div class= "warning" *ngIf="myForm.get('priority').invalid && myForm.get('priority').dirty">
@@ -47,7 +48,7 @@
     <div class = "mt-4">
             <label>Status </label><br>
             <select formControlName="status">
-                <option [ngValue]="null">Select</option>
+                <option [ngValue]="null" >Select</option>
                 <option *ngFor="let status of statuses" [ngValue]="status">
                    {{status}}
                 </option>
@@ -60,6 +61,8 @@
     <div class="text-center mt-4">
         <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
     </div>
+
+    
 </form>
 
 <pre>
