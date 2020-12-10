@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, getDebugNode, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { Bugs } from '../bugs';
 import { RestService } from '../rest.service';
 
@@ -12,7 +13,7 @@ export class SubmitBugComponent implements OnInit {
   
   
 
-  constructor(private restService:RestService) { }
+  constructor(private restService:RestService,private route: ActivatedRoute) { }
 
 myForm:FormGroup; 
   
@@ -31,6 +32,8 @@ myForm:FormGroup;
     "Ready for testing", "Done", "Rejected"
   ]
 
+  id:string;
+
 
   ngOnInit(): void {
     this.myForm = new FormGroup({
@@ -46,7 +49,12 @@ myForm:FormGroup;
   
 
   
-
+  console.log(this.route.snapshot.params["id"]);
+  
+  this.id=this.route.snapshot.params["id"];
+  this.restService.getBug(this.id).subscribe(data=>{
+    console.log(data);
+  });
   
 
 

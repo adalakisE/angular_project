@@ -9,6 +9,7 @@
             <th scope="col" (click)="filterUp('reporter')">Reporter</th>
             <th scope="col" (click)="filterUp('createdAt')">Date Created</th>
             <th scope="col" (click)="filterUp('status')">Status</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,7 @@
             <td>{{bug.reporter}}</td>
             <td>{{bug.createdAt.substring(0,10)}}</td>
             <td>{{bug.status}}</td>
+            <td><button (click)=onClick(bug) >Edit</button></td>
         </tr>
     </tbody>
 </table>

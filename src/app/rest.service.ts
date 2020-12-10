@@ -8,7 +8,7 @@ import { Bugs } from './bugs';
   providedIn: 'root'
 })
 export class RestService {
-
+  private endpoint2 = "https://bug-report-system-server.herokuapp.com/bugs/";
   private endpoint = "https://bug-report-system-server.herokuapp.com/bugs";
   constructor(private http:HttpClient) { }
 
@@ -24,14 +24,15 @@ export class RestService {
     return this.http.post<Bugs>(this.endpoint,bug);
   }
 
-  /*submitForm(){
-    if(!this.myForm.valid){
-      return;
-    }
-    console.log(this.myForm.value);
-    return this.http.post
-    
-  }*/
+  getBug(id:string):Observable<Bugs>{
+    return this.http.get<Bugs>(this.endpoint2+ id)
+
+  }
+
+  updateBug(id:number,bug:Bugs) : Observable<Bugs>{
+    return this.http.put<Bugs>(this.endpoint + '/' + id,bug);
+
+  }
   
   
 }

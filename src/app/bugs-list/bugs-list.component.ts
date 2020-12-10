@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Button } from 'protractor';
 import { Bugs } from '../bugs';
 import { RestService } from '../rest.service';
@@ -10,14 +11,14 @@ import { RestService } from '../rest.service';
   styleUrls: ['./bugs-list.component.scss']
 })
 export class BugsListComponent implements OnInit {
-  //private _bugs = [];
+  
   private _bugs: Bugs;
-//  private bugs: Bugs;
+
 
   private ascending: boolean = true;
   private filterBy = 'title';
   
-  constructor(private restService:RestService) { }
+  constructor(private restService:RestService, private _router: Router) { }
 
   ngOnInit(): void {
     this.getAllBugs();
@@ -47,4 +48,9 @@ export class BugsListComponent implements OnInit {
     return this._bugs;
   }
   
+
+  onClick(bug:Bugs){
+     this._router.navigate(['/submitnewbug',bug.id])
+     console.log(bug);
+  }
 }

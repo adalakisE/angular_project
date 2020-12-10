@@ -4,7 +4,7 @@ import { BugsListComponent } from './bugs-list/bugs-list.component';
 import { SubmitBugComponent } from './submit-bug/submit-bug.component';
 
 const routes: Routes = [
-  { path: 'submitnewbug',  component: SubmitBugComponent},
+  { path: 'submitnewbug/:id',  component: SubmitBugComponent},
   { path: '', component:  BugsListComponent}
 ];
 
