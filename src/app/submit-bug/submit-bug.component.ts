@@ -2,6 +2,7 @@ import { Component, getDebugNode, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Bugs } from '../bugs';
+import { BugsListComponent } from '../bugs-list/bugs-list.component';
 import { RestService } from '../rest.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class SubmitBugComponent implements OnInit {
   
   
 
-  constructor(private restService:RestService,private route: ActivatedRoute) { }
+constructor(private restService:RestService, private route: ActivatedRoute) { }
 
 myForm:FormGroup; 
   
@@ -33,30 +34,59 @@ myForm:FormGroup;
   ]
 
   id:string;
-
+  bugs: Bugs = {
+    id: 0,
+    title: 'null',
+    priority: 0,
+    reporter: 'null',
+    date: 'null',
+    status: 'null',
+    description: 'a'
+  }    
+  
 
   ngOnInit(): void {
+
+    console.log(this.route.snapshot.params["id"]);
+    
+
+    this.id=this.route.snapshot.params["id"];
+    if(this.id){
+    this.restService.getBug(this.id).subscribe(data=>{
+      this.bugs = data
+      console.log(this.bugs);
+
+      this.myForm.setValue({
+        title: this.bugs.title,
+        description: this.bugs.description,
+        priority: this.bugs.priority,
+        reporter: this.bugs.reporter,
+        status: this.bugs.status
+      })
+    });
+  }
+
     this.myForm = new FormGroup({
-      title:new FormControl(" ", Validators.required),
+      title:new FormControl("", Validators.required),
       description: new FormControl("", Validators.required),
       priority: new FormControl(this.priorities, Validators.required),
       reporter:new FormControl(this.reporters, Validators.required),
       status: new FormControl(this.statuses)
     });
+
+    
+
+  
   this.myForm.get('reporter').patchValue(null)
   this.myForm.get('status').patchValue(null)
   this.myForm.get('priority').patchValue(null)
   
 
-  
-  console.log(this.route.snapshot.params["id"]);
-  
-  this.id=this.route.snapshot.params["id"];
-  this.restService.getBug(this.id).subscribe(data=>{
-    console.log(data);
-  });
-  
 
+
+
+  
+  console.log(this.bugs)
 
   this.myForm.get('reporter').valueChanges.subscribe((value)=>{
     if (value=== 'QA'){

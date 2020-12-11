@@ -5,4 +5,5 @@ export interface Bugs {
     reporter: string;
     date: string;
     status: string;
+    description: string
 }
