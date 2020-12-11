@@ -10,8 +10,6 @@ import { RestService } from '../rest.service';
   styleUrls: ['./submit-bug.component.scss']
 })
 export class SubmitBugComponent implements OnInit {
-  
-  
 
   constructor(private restService:RestService,private route: ActivatedRoute) { }
 
