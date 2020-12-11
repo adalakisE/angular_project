@@ -11,12 +11,11 @@ import { RestService } from '../rest.service';
   styleUrls: ['./submit-bug.component.scss']
 })
 export class SubmitBugComponent implements OnInit {
-  
-  
 
 constructor(private restService:RestService, private route: ActivatedRoute) { }
 
 myForm:FormGroup; 
+commentsForm: FormGroup;
   
 
   priorities=new Map([
@@ -33,28 +32,38 @@ myForm:FormGroup;
     "Ready for testing", "Done", "Rejected"
   ]
 
-  id:string;
+  id: string = 'null';
+
   bugs: Bugs = {
     id: 0,
     title: 'null',
+    description: 'null',
     priority: 0,
     reporter: 'null',
-    date: 'null',
     status: 'null',
-    description: 'a'
+    updatedAt: new Date,
+    createdAt: new Date,
+    comments: [{
+      name: 'null',
+      comment: 'null'
+    }]
   }    
   
+  devPO: boolean = false;
 
   ngOnInit(): void {
 
-    console.log(this.route.snapshot.params["id"]);
-    
 
-    this.id=this.route.snapshot.params["id"];
+    this.id = this.route.snapshot.params["id"];
+
     if(this.id){
     this.restService.getBug(this.id).subscribe(data=>{
       this.bugs = data
       console.log(this.bugs);
+
+      if(this.bugs.reporter === "DEV" || this.bugs.reporter == "PO"){
+        this.devPO = true
+      }
 
       this.myForm.setValue({
         title: this.bugs.title,
@@ -63,8 +72,16 @@ myForm:FormGroup;
         reporter: this.bugs.reporter,
         status: this.bugs.status
       })
+
+      this.commentsForm.setValue({
+        
+        name: this.bugs.reporter, //fix it with name
+        comments: this.bugs.comments
+      })
+
     });
   }
+
 
     this.myForm = new FormGroup({
       title:new FormControl("", Validators.required),
@@ -74,22 +91,20 @@ myForm:FormGroup;
       status: new FormControl(this.statuses)
     });
 
-    
+    this.commentsForm = new FormGroup({
+      name: new FormControl("", Validators.required),
+      comments: new FormControl("", Validators.required),
+    })
 
+  
   
   this.myForm.get('reporter').patchValue(null)
   this.myForm.get('status').patchValue(null)
   this.myForm.get('priority').patchValue(null)
   
 
-
-
-
-  
-  console.log(this.bugs)
-
   this.myForm.get('reporter').valueChanges.subscribe((value)=>{
-    if (value=== 'QA'){
+    if (value === 'QA'){
       this.myForm.get('status').setValidators(Validators.required)
     }else{
       this.myForm.get('status').clearValidators()

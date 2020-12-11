@@ -1,70 +1,93 @@
-
-
 <button type="button" class="btn btn-secondary ml-2 mt-3" [routerLink]="''">Back</button>
 <h1 class="text-center"> Submit new bug</h1>
 <!--(submit)="submitForm()"-->
-<form [formGroup]= "myForm" (submit)="submitForm()">
+<form [formGroup]="myForm" (submit)="submitForm()">
     <div class="text-center">
-    <div class="mt-4" >
-        <label>Title  </label><br>
-        <input formControlName="title" type="text">
-        <div class= "warning" *ngIf="myForm.get('title').invalid && myForm.get('title').dirty">
-            Field is required
+        <div class="mt-4">
+            <label>Title </label><br>
+            <input formControlName="title" type="text">
+            <div class="warning" *ngIf="myForm.get('title').invalid && myForm.get('title').dirty">
+                Field is required
+            </div>
         </div>
-    </div>
-    <div class="mt-4">
-        <label>Description  </label><br>
-        <input formControlName="description" type="text">
-        <div class= "warning"*ngIf="myForm.get('description').invalid && myForm.get('description').dirty" >
-            Field is required
+        <div class="mt-4">
+            <label>Description </label><br>
+            <input formControlName="description" type="text">
+            <div class="warning" *ngIf="myForm.get('description').invalid && myForm.get('description').dirty">
+                Field is required
+            </div>
         </div>
-    </div>
 
-    <div class = "mt-4">
-        <label>Priority </label><br>
-        <select formControlName="priority">
-            
-            <option [ngValue]="null" selected>Select</option>
-            <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
-                {{priority.key}}
-            </option> 
-           </select>
-           <div class= "warning" *ngIf="myForm.get('priority').invalid && myForm.get('priority').dirty">
-                Field is required
-            </div>
-    </div>
-    <div class = "mt-4">
-        <label>Reporter </label><br>
-        <select formControlName="reporter">
-            <option [ngValue]="null">Select</option>
-            <option *ngFor="let reporter of reporters" [ngValue]="reporter">
-                   {{reporter}}
-            </option>
-            </select>
-            <div class= "warning" *ngIf="myForm.get('reporter').invalid && myForm.get('reporter').dirty">
-                Field is required
-            </div>
-    </div>
-    <div class = "mt-4">
-            <label>Status </label><br>
-            <select formControlName="status">
-                <option [ngValue]="null" >Select</option>
-                <option *ngFor="let status of statuses" [ngValue]="status">
-                   {{status}}
+        <div class="mt-4">
+            <label>Priority </label><br>
+            <select formControlName="priority">
+
+                <option [ngValue]="null" selected>Select</option>
+                <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
+                    {{priority.key}}
                 </option>
             </select>
-            <div class= "warning" *ngIf="myForm.get('status').invalid && myForm.get('status').dirty">
+            <div class="warning" *ngIf="myForm.get('priority').invalid && myForm.get('priority').dirty">
                 Field is required
             </div>
-    </div>
+        </div>
+        <div class="mt-4">
+            <label>Reporter </label><br>
+            <select formControlName="reporter">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let reporter of reporters" [ngValue]="reporter">
+                    {{reporter}}
+                </option>
+            </select>
+            <div class="warning" *ngIf="myForm.get('reporter').invalid && myForm.get('reporter').dirty">
+                Field is required
+            </div>
+        </div>
+        <div class="mt-4">
+            <label>Status </label><br>
+            <select formControlName="status">
+                <option [ngValue]="null">Select</option>
+                <option *ngFor="let status of statuses" [ngValue]="status">
+                    {{status}}
+                </option>
+            </select>
+            <div class="warning" *ngIf="myForm.get('status').invalid && myForm.get('status').dirty">
+                Field is required
+            </div>
+        </div>
     </div>
     <div class="text-center mt-4">
         <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
     </div>
-
-    
 </form>
+
+
+ <!-- COMMENTS FORM -->
+<form [formGroup]="commentsForm" (submit)="submitForm()" *ngIf="devPO" style="background-color: rgb(182, 222, 224); width: 30%; margin-left: 35%;">
+    <div class="text-center ">
+        <div class="mt-4 ">
+            <label class="pt-2">Name</label><br>
+            <input formControlName="name" type="text">
+            <div class="warning" *ngIf="commentsForm.get('name').invalid && commentsForm.get('name').dirty">
+                Field is required
+            </div>
+        </div>
+        <div class="mt-4">
+            <label>Comment</label><br>
+            <input formControlName="comments" type="text">
+            <div class="warning" *ngIf="commentsForm.get('comments').invalid && commentsForm.get('comments').dirty">
+                Field is required
+            </div>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <button class="btn btn-primary mb-3" [disabled]="!commentsForm.valid"> Add new comment </button>
+        <!-- <button class="btn btn-primary mb-3" [disabled]="!commentsForm.valid">Submit Comments</button> -->
+    </div>
+</form>
+
 
 <pre>
     {{myForm.value | json}}
+    {{commentsForm.value | json}}
 </pre>
