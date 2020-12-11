@@ -13,13 +13,11 @@ import { RestService } from '../rest.service';
 })
 export class SubmitBugComponent implements OnInit {
 
-  constructor(private restService: RestService, 
-              private route: ActivatedRoute,
-              private _router: Router) { }
+  constructor(private restService: RestService,
+    private route: ActivatedRoute,
+    private _router: Router) { }
 
   myForm: FormGroup;
-  commentsForm: FormGroup;
-
 
   priorities = new Map([
     ["Minor", 1],
@@ -47,8 +45,9 @@ export class SubmitBugComponent implements OnInit {
     updatedAt: new Date,
     createdAt: new Date,
     comments: [{
-      name: 'null',
-      comment: 'null'
+      reporter: 'null',
+      description: 'null',
+      id: 'null'
     }]
   }
 
@@ -64,6 +63,8 @@ export class SubmitBugComponent implements OnInit {
         this.bugs = data
         console.log(this.bugs);
 
+
+
         if (this.bugs.reporter === "DEV" || this.bugs.reporter == "PO") {
           this.devPO = true
         }
@@ -73,14 +74,18 @@ export class SubmitBugComponent implements OnInit {
           description: this.bugs.description,
           priority: this.bugs.priority,
           reporter: this.bugs.reporter,
-          status: this.bugs.status
+          status: this.bugs.status,
+          //name: 'a',
+          //comments: 'b'
         })
 
-        this.commentsForm.setValue({
+        // for (let i = 0; i < this.bugs.comments.length; i++) {
+        //   this.myForm.setValue({
+        //     name: this.bugs.comments[i].reporter, //fix it with name
+        //     comments: this.bugs.comments[i].description
+        //   })
+        // }
 
-          name: this.bugs.reporter, //fix it with name
-          comments: this.bugs.comments
-        })
 
       });
     }
@@ -91,20 +96,19 @@ export class SubmitBugComponent implements OnInit {
       description: new FormControl("", Validators.required),
       priority: new FormControl(this.priorities, Validators.required),
       reporter: new FormControl(this.reporters, Validators.required),
-      status: new FormControl(this.statuses)
+      status: new FormControl(this.statuses),
+
+      // how can we declare name, comments and comment id as an object in an array??
+      //name: new FormControl("", Validators.required),
+      //comments: new FormControl("", Validators.required)
+      
     });
-
-    this.commentsForm = new FormGroup({
-      name: new FormControl("", Validators.required),
-      comments: new FormControl("", Validators.required),
-    })
-
-
 
     this.myForm.get('reporter').patchValue(null)
     this.myForm.get('status').patchValue(null)
     this.myForm.get('priority').patchValue(null)
-
+    this.myForm.get('name').patchValue('-')
+    this.myForm.get('comments').patchValue('-')
 
     this.myForm.get('reporter').valueChanges.subscribe((value) => {
       if (value === 'QA') {
@@ -133,7 +137,7 @@ export class SubmitBugComponent implements OnInit {
 
     } else {
       console.log('I will update a bug')
-      this.restService.updateBug(this.bugs.id, bug).subscribe((results)=>{
+      this.restService.updateBug(this.bugs.id, bug).subscribe((results) => {
         console.log(results)
       })
     }

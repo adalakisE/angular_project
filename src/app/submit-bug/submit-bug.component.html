@@ -55,6 +55,25 @@
                 Field is required
             </div>
         </div>
+
+        <div *ngIf="devPO" style="background-color: rgb(182, 222, 224); width: 30%; margin-left: 35%;">
+            <div class="text-center" >
+                <div class="mt-4"> 
+                    <label class="pt-2">Name</label><br>
+                    <input formControlName="name" type="text">
+                    <div class="warning" *ngIf="myForm.get('name').invalid && myForm.get('name').dirty">
+                        Field is required
+                    </div>
+                </div>
+                <div class="mt-4 pb-4">
+                    <label>Comment</label><br>
+                    <input formControlName="comments" type="text">
+                    <div class="warning" *ngIf="myForm.get('comments').invalid && myForm.get('comments').dirty">
+                        Field is required
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="text-center mt-4">
         <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
@@ -62,32 +81,9 @@
 </form>
 
 
- <!-- COMMENTS FORM -->
-<form [formGroup]="commentsForm" (submit)="submitForm()" *ngIf="devPO" style="background-color: rgb(182, 222, 224); width: 30%; margin-left: 35%;">
-    <div class="text-center ">
-        <div class="mt-4 ">
-            <label class="pt-2">Name</label><br>
-            <input formControlName="name" type="text">
-            <div class="warning" *ngIf="commentsForm.get('name').invalid && commentsForm.get('name').dirty">
-                Field is required
-            </div>
-        </div>
-        <div class="mt-4">
-            <label>Comment</label><br>
-            <input formControlName="comments" type="text">
-            <div class="warning" *ngIf="commentsForm.get('comments').invalid && commentsForm.get('comments').dirty">
-                Field is required
-            </div>
-        </div>
-    </div>
-    <div class="text-center mt-4">
-        <button class="btn btn-primary mb-3" [disabled]="!commentsForm.valid"> Add new comment </button>
-        <!-- <button class="btn btn-primary mb-3" [disabled]="!commentsForm.valid">Submit Comments</button> -->
-    </div>
-</form>
+<!-- COMMENTS FORM -->
 
 
 <pre>
     {{myForm.value | json}}
-    {{commentsForm.value | json}}
 </pre>

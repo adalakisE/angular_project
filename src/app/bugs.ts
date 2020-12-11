@@ -8,8 +8,9 @@ export interface Bugs {
     updatedAt: Date;
     createdAt: Date,
     comments: [{
-        name: string,
-        comment: string
+        reporter: string,
+        description: string,
+        id: string
     }]
 }
 
