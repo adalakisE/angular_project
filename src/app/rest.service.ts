@@ -24,14 +24,17 @@ export class RestService {
     return this.http.post<Bugs>(this.endpoint,bug);
   }
 
+  // updateBug(bug: Bugs): Observable<Bugs>{
+  //   return this.http.put<Bugs>(this.endpoint2, bug)
+  // }
+
   getBug(id:string):Observable<Bugs>{
     return this.http.get<Bugs>(this.endpoint2+ id)
 
   }
 
-  updateBug(id:number,bug:Bugs) : Observable<Bugs>{
-    return this.http.put<Bugs>(this.endpoint + '/' + id,bug);
-
+  updateBug(id:number, bug:Bugs) : Observable<Bugs>{
+    return this.http.put<Bugs>(this.endpoint2 + id, bug)        
   }
   
   
