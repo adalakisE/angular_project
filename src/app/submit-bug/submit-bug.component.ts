@@ -1,5 +1,5 @@
 import { Component, getDebugNode, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { threadId } from 'worker_threads';
 import { Bugs } from '../bugs';
@@ -35,9 +35,11 @@ export class SubmitBugComponent implements OnInit {
 
   id: string = 'null';
 
+  //bugs: Bugs = new Bugs
+
   bugs: Bugs = {
     id: 0,
-    title: 'null',
+    title: '',
     description: 'null',
     priority: 0,
     reporter: 'null',
@@ -63,30 +65,12 @@ export class SubmitBugComponent implements OnInit {
         this.bugs = data
         console.log(this.bugs);
 
-
-
         if (this.bugs.reporter === "DEV" || this.bugs.reporter == "PO") {
           this.devPO = true
         }
-
-        this.myForm.setValue({
-          title: this.bugs.title,
-          description: this.bugs.description,
-          priority: this.bugs.priority,
-          reporter: this.bugs.reporter,
-          status: this.bugs.status,
-          //name: 'a',
-          //comments: 'b'
-        })
-
-        // for (let i = 0; i < this.bugs.comments.length; i++) {
-        //   this.myForm.setValue({
-        //     name: this.bugs.comments[i].reporter, //fix it with name
-        //     comments: this.bugs.comments[i].description
-        //   })
-        // }
-
-
+        this.myForm.patchValue(
+          this.bugs
+        )
       });
     }
 
@@ -97,18 +81,19 @@ export class SubmitBugComponent implements OnInit {
       priority: new FormControl(this.priorities, Validators.required),
       reporter: new FormControl(this.reporters, Validators.required),
       status: new FormControl(this.statuses),
+      
+      comments: new FormArray([]),
+      reporterComment: new FormControl(""),
+      descriptionComment: new FormControl(""),
+      idComment: new FormControl("")
 
       // how can we declare name, comments and comment id as an object in an array??
-      //name: new FormControl("", Validators.required),
-      //comments: new FormControl("", Validators.required)
-      
     });
 
     this.myForm.get('reporter').patchValue(null)
     this.myForm.get('status').patchValue(null)
     this.myForm.get('priority').patchValue(null)
-    this.myForm.get('name').patchValue('-')
-    this.myForm.get('comments').patchValue('-')
+
 
     this.myForm.get('reporter').valueChanges.subscribe((value) => {
       if (value === 'QA') {
@@ -118,8 +103,16 @@ export class SubmitBugComponent implements OnInit {
       }
       this.myForm.get('status').updateValueAndValidity()
     })
-
+ 
   }
+
+  pushComments(){
+
+   // this.myForm.get('reporterComment').push(new FormGroup({}))
+  }
+
+
+
 
   submitForm() {
     if (!this.myForm.valid) {
@@ -139,6 +132,7 @@ export class SubmitBugComponent implements OnInit {
       console.log('I will update a bug')
       this.restService.updateBug(this.bugs.id, bug).subscribe((results) => {
         console.log(results)
+        this._router.navigate(['/'])
       })
     }
   }
