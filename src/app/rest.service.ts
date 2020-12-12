@@ -19,7 +19,6 @@ export class RestService {
     return this.http.get<Bugs>(query);
   }
 
-
   addBug(bug:Bugs): Observable<Bugs>{
     return this.http.post<Bugs>(this.endpoint,bug);
   }
@@ -29,9 +28,8 @@ export class RestService {
 
   }
 
-  updateBug(id:number,bug:Bugs) : Observable<Bugs>{
-    return this.http.put<Bugs>(this.endpoint + '/' + id,bug);
-
+  updateBug(id:number, bug:Bugs) : Observable<Bugs>{
+    return this.http.put<Bugs>(this.endpoint2 + id, bug)        
   }
   
   
