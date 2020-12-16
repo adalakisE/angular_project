@@ -1,24 +1,28 @@
 <button class="btn btn-primary mt-5 mb-3 ml-2" routerLink="/submitnewbug">Create new</button>
 
+<form [formGroup]="searchForm" (submit)="submitSearchForm()">
+
 <table class="table table-striped ml-2 mb-5">
+    
     <thead>
         <tr class="bg-dark text-white">
-            <form [formGroup]="searchForm" (submit)="submitSearchForm()">
-                <th scope="col"><input formControlName="title" type="text">asd</th>
+            
+                <th scope="col"><input formControlName="title" type="text"></th>
                 <th scope="col">
-                    <select formControlName="priority"></select>
+                    <select formControlName="priority">
                     <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
                         {{priority.key}}
                     </option>
+                    </select>   
                 </th>
-                <th scope="col">Reporter</th>
+                <!-- <th scope="col">Reporter</th>
                 <th scope="col">Date Created</th>
-                <th scope="col">Status</th>
+                <th scope="col">Status</th> -->
                 <th scope="col"></th>
                 <th scope="col"></th>
                 <th></th>
-            </form>
         </tr>
+
         <tr class="bg-dark text-white">
             <th scope="col" (click)="filterUp('title')">Title</th>
             <th scope="col" (click)="filterUp('priority')">Priority</th>
@@ -42,6 +46,7 @@
         </tr>
     </tbody>
 </table>
+</form>
 
 <!-- <div class="container"> -->
 <div class="d-flex justify-content-center" >
