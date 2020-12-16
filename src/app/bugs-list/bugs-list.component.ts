@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Button } from 'protractor';
@@ -12,9 +13,9 @@ import { RestService } from '../rest.service';
 })
 export class BugsListComponent implements OnInit {
   
-  private _bugs: Bugs;
+  _bugs: Bugs;
 
-
+  pageCounter:number = 0;
   private ascending: boolean = true;
   private filterBy = 'title';
   
@@ -25,9 +26,13 @@ export class BugsListComponent implements OnInit {
   }
 
   getAllBugs(){
-    this.restService.getAllBugs(this.filterBy, this.ascending).subscribe((bugs)=>{
+    this.restService.getAllBugs(this.filterBy, this.ascending, this.pageCounter).subscribe((bugs)=>{
       console.log(bugs);
       this.bugs = bugs;
+      
+      if(this.bugs[9] === undefined){
+        this.pageCounter=0;
+      }
     });
   }
   filterUp(filterValue){
@@ -48,9 +53,29 @@ export class BugsListComponent implements OnInit {
     return this._bugs;
   }
   
+  prevPage(){
+    this.pageCounter--;
+    if(this.pageCounter<0) this.pageCounter=0;
+    this.getAllBugs();
+  }
+
+  nextPage(){
+    this.pageCounter++;
+    //if(this.bugs[0].length)
+    console.log(this.bugs[0])
+
+ 
+    this.getAllBugs();
+  }
 
   onClick(bug:Bugs){
      this._router.navigate(['/submitnewbug',bug.id])
      console.log(bug);
+  }
+  onDelete(bug:Bugs){
+    this.restService.deleteBug(bug.id).subscribe(data=>{
+      console.log(data)
+      this.getAllBugs();
+    })
   }
 }

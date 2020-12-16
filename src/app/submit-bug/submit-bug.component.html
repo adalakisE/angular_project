@@ -77,6 +77,8 @@
     </div>
     <div class="text-center mt-4">
         <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+        <br>
+        <button class="btn btn-primary" (click)="pushComments()">+</button>
     </div>
 </form>
 
