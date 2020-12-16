@@ -1,5 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Button } from 'protractor';
 import { Bugs } from '../bugs';
@@ -15,13 +16,38 @@ export class BugsListComponent implements OnInit {
   
   _bugs: Bugs;
 
+  searchForm: FormGroup;
   pageCounter:number = 0;
   private ascending: boolean = true;
   private filterBy = 'title';
+
+  priorities = new Map([
+    ["Minor", 1],
+    ["Major", 2],
+    ["Critical", 3]
+  ]);
+
+  reporters = [
+    "QA", "PO", "DEV"
+  ]
+
+  statuses = [
+    "Ready for testing", "Done", "Rejected"
+  ]
   
   constructor(private restService:RestService, private _router: Router) { }
 
   ngOnInit(): void {
+    
+    this.searchForm = new FormGroup({
+      title: new FormControl(""),
+      priority: new FormControl(""),
+      reporter: new FormControl(""),
+      dateCreated: new FormControl(""),
+      status: new FormControl("")
+    });
+
+
     this.getAllBugs();
   }
 
@@ -77,5 +103,9 @@ export class BugsListComponent implements OnInit {
       console.log(data)
       this.getAllBugs();
     })
+  }
+
+  submitSearchForm(){
+
   }
 }

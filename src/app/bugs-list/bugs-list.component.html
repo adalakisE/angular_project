@@ -1,8 +1,24 @@
-
 <button class="btn btn-primary mt-5 mb-3 ml-2" routerLink="/submitnewbug">Create new</button>
 
 <table class="table table-striped ml-2 mb-5">
     <thead>
+        <tr class="bg-dark text-white">
+            <form [formGroup]="searchForm" (submit)="submitSearchForm()">
+                <th scope="col"><input formControlName="title" type="text">asd</th>
+                <th scope="col">
+                    <select formControlName="priority"></select>
+                    <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
+                        {{priority.key}}
+                    </option>
+                </th>
+                <th scope="col">Reporter</th>
+                <th scope="col">Date Created</th>
+                <th scope="col">Status</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th></th>
+            </form>
+        </tr>
         <tr class="bg-dark text-white">
             <th scope="col" (click)="filterUp('title')">Title</th>
             <th scope="col" (click)="filterUp('priority')">Priority</th>
@@ -33,3 +49,7 @@
     <button class="btn btn-primary col text-center" (click)="nextPage()"> > </button>
 <!-- </div> -->
 </div>
+
+<pre>
+    {{searchForm.value | json}}
+</pre>
