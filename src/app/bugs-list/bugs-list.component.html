@@ -10,7 +10,7 @@
                 <th scope="col"><input style="height: 25px;" formControlName="title" type="text"></th>
                 <th scope="col">
                     <select formControlName="priority">
-                        <option [ngValue]="null"></option>
+                        <option [ngValue]="null">Select</option>
                         <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
                             {{priority.key}}
                         </option>
@@ -18,7 +18,7 @@
                 </th>
                 <th>
                     <select formControlName="reporter">
-                        <option [ngValue]="null"></option>
+                        <option [ngValue]="null">Select</option>
                         <option *ngFor="let reporter of reporters" [ngValue]="reporter">
                             {{reporter}}
                         </option>

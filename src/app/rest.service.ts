@@ -13,10 +13,10 @@ export class RestService {
   private endpoint = "https://bug-report-system-server.herokuapp.com/bugs";
   constructor(private http:HttpClient) { }
 
-  getAllBugs(filterBy, ascending, pageCounter): Observable<Bugs> {
+  getAllBugs(filterBy, ascending, pageCounter, filterQuery): Observable<Bugs> {
 
     let query = this.endpoint + '?sort='+filterBy+","+ 
-    (ascending ? 'asc':'desc')+"&page="+ pageCounter +"&count=40";
+    (ascending ? 'asc':'desc')  + "&page="+ pageCounter +"&count=40" + filterQuery ;
     console.log(query)
     return this.http.get<Bugs>(query);
   }

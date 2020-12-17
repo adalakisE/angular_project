@@ -21,6 +21,7 @@ export class BugsListComponent implements OnInit {
   pageCounter:number = 0;
   private ascending: boolean = true;
   private filterBy = 'title';
+  filterQuery: string;
 
   priorities = new Map([
     ["Minor", 1],
@@ -52,7 +53,8 @@ export class BugsListComponent implements OnInit {
   }
 
   getAllBugs(){
-    this.restService.getAllBugs(this.filterBy, this.ascending, this.pageCounter).subscribe((bugs)=>{
+    console.log(this.filterQuery)
+    this.restService.getAllBugs(this.filterBy, this.ascending, this.pageCounter, this.filterQuery).subscribe((bugs)=>{
       console.log(bugs);
       this.bugs = bugs;
       
@@ -122,14 +124,13 @@ export class BugsListComponent implements OnInit {
       this.searchForm.value.status="";
     }
 
-    let filterQuery = "?" + 
+    this.filterQuery = 
+                      //"?" + 
                        "&title=" + this.searchForm.value.title +
                        "&priority=" + this.searchForm.value.priority +
                        "&reporter=" + this.searchForm.value.reporter + 
                        "&status=" + this.searchForm.value.status;
 
-    this.restService.getFilteredBugs(filterQuery).subscribe(data => {
-      this.bugs = data;
-    })
+    this.getAllBugs();
   }
 }
