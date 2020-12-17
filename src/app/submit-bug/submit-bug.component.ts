@@ -1,10 +1,13 @@
-import { Component, getDebugNode, OnInit } from '@angular/core';
+import { Component, getDebugNode, HostListener, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { threadId } from 'worker_threads';
 import { Bugs } from '../bugs';
 import { BugsListComponent } from '../bugs-list/bugs-list.component';
-import { RestService } from '../rest.service';
+import { RestService, SampleComponentCanDeactivate } from '../rest.service';
+
+
 
 @Component({
   selector: 'app-submit-bug',
@@ -18,6 +21,13 @@ export class SubmitBugComponent implements OnInit {
     private _router: Router) { }
 
   myForm: FormGroup;
+
+  @HostListener("window:beforeunload")  
+ selloutcanDeactivate(): Observable<boolean> | boolean {  
+     return (  
+         !this.myForm.dirty  
+     );  
+ } 
 
   priorities = new Map([
     ["Minor", 1],
@@ -109,6 +119,7 @@ export class SubmitBugComponent implements OnInit {
   pushComments(){
 
    // this.myForm.get('reporterComment').push(new FormGroup({}))
+   //fanis's video udemy on FormArray
   }
 
 
