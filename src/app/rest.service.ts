@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Bugs } from './bugs';
+import { query } from '@angular/animations';
 
 @Injectable({
   
@@ -18,6 +19,12 @@ export class RestService {
     (ascending ? 'asc':'desc')+"&page="+ pageCounter +"&count=40";
     console.log(query)
     return this.http.get<Bugs>(query);
+  }
+
+  getFilteredBugs(filterQuery: string): Observable<Bugs>{
+    let query = this.endpoint + filterQuery
+    console.log(query)
+    return this.http.get<Bugs>(query)
   }
 
   addBug(bug:Bugs): Observable<Bugs>{

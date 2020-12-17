@@ -43,7 +43,6 @@ export class BugsListComponent implements OnInit {
       title: new FormControl(""),
       priority: new FormControl(""),
       reporter: new FormControl(""),
-      dateCreated: new FormControl(""),
       status: new FormControl("")
     });
 
@@ -106,6 +105,15 @@ export class BugsListComponent implements OnInit {
   }
 
   submitSearchForm(){
+    console.log("submit search")
+    console.log(this.searchForm.value)
+    let filterQuery = "?&title=" + this.searchForm.value.title +
+                       "&priority=" + this.searchForm.value.priority +
+                       "&reporter=" + this.searchForm.value.reporter + 
+                       "&status=" + this.searchForm.value.status;
 
+    this.restService.getFilteredBugs(filterQuery).subscribe(data => {
+      this.bugs = data;
+    })
   }
 }
