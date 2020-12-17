@@ -1,15 +1,15 @@
-<button class="btn btn-primary mt-5 mb-3 ml-2" routerLink="/submitnewbug">Create new</button>
+<button class="searchButton" style="margin: 20px 0 10px 40px;" routerLink="/submitnewbug">New bug</button>
 
-<form [formGroup]="searchForm" (submit)="submitSearchForm()">
+<form [formGroup]="searchForm" style="margin: 30px;" (submit)="submitSearchForm()">
 
     <table class="table table-striped ml-2 mb-5">
 
         <thead>
             <tr class="bg-dark text-white">
 
-                <th scope="col"><input style="height: 25px;" formControlName="title" type="text"></th>
+                <th scope="col"><input formControlName="title" type="text" class="inputs"></th>
                 <th scope="col">
-                    <select formControlName="priority">
+                    <select formControlName="priority" class="inputs">
                         <option [ngValue]="null">Select</option>
                         <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
                             {{priority.key}}
@@ -17,7 +17,7 @@
                     </select>
                 </th>
                 <th>
-                    <select formControlName="reporter">
+                    <select formControlName="reporter" class="inputs">
                         <option [ngValue]="null">Select</option>
                         <option *ngFor="let reporter of reporters" [ngValue]="reporter">
                             {{reporter}}
@@ -26,7 +26,7 @@
                 </th>
                 <th scope="col"></th>
                 <th>
-                    <select formControlName="status">
+                    <select formControlName="status" class="inputs">
                         <option [ngValue]="null">Select</option>
                         <option *ngFor="let status of statuses" [ngValue]="status">
                             {{status}}
@@ -35,7 +35,7 @@
                 </th>
                 <th scope="col"></th>
                 <th scope="col">
-                    <button class="btn btn-primary"[disabled]="!searchForm.valid">Search</button>
+                    <button class="searchButton" [disabled]="!searchForm.valid">Search</button>
                 </th>
 
                 <th></th>
