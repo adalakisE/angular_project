@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Button } from 'protractor';
+import { runInThisContext } from 'vm';
 import { Bugs } from '../bugs';
 import { RestService } from '../rest.service';
 
@@ -107,7 +108,22 @@ export class BugsListComponent implements OnInit {
   submitSearchForm(){
     console.log("submit search")
     console.log(this.searchForm.value)
-    let filterQuery = "?&title=" + this.searchForm.value.title +
+    
+    if(this.searchForm.value.title===null){
+      this.searchForm.value.title="";
+    }
+    if(this.searchForm.value.priority===null){
+      this.searchForm.value.priority="";
+    }
+    if(this.searchForm.value.reporter===null){
+      this.searchForm.value.reporter="";
+    }
+    if(this.searchForm.value.status===null){
+      this.searchForm.value.status="";
+    }
+
+    let filterQuery = "?" + 
+                       "&title=" + this.searchForm.value.title +
                        "&priority=" + this.searchForm.value.priority +
                        "&reporter=" + this.searchForm.value.reporter + 
                        "&status=" + this.searchForm.value.status;
