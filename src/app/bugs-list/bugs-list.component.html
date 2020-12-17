@@ -1,4 +1,5 @@
 <button class="searchButton" style="margin: 20px 0 10px 40px;" routerLink="/submitnewbug">New bug</button>
+<img src="../../assets/images/bug.png" style="height: 35px; margin-left: 10px;">
 
 <form [formGroup]="searchForm" style="margin: 30px;" (submit)="submitSearchForm()">
 
@@ -33,9 +34,13 @@
                         </option>
                     </select>
                 </th>
-                <th scope="col"></th>
+                <th scope="col">
+                    <!-- <img src="../../assets/images/loupe.png" style="height:30px" [disabled]="!searchForm.valid"> -->
+                </th>
+
                 <th scope="col">
                     <button class="searchButton" [disabled]="!searchForm.valid">Search</button>
+                    
                 </th>
 
                 <th></th>
@@ -59,8 +64,8 @@
                 <td>{{bug.reporter}}</td>
                 <td>{{bug.createdAt.substring(0,10)}}</td>
                 <td>{{bug.status}}</td>
-                <td><button (click)=onClick(bug)>Edit</button></td>
-                <td><button (click)=onDelete(bug)>Delete</button></td>
+                <td><button class="actionButtons" (click)=onClick(bug)>Edit</button></td>
+                <td><button class="actionButtons" (click)=onDelete(bug)>Delete</button></td>
             </tr>
         </tbody>
     </table>
@@ -75,8 +80,8 @@
 </div>
 
 <div class="d-flex justify-content-center pt-3">
-    <p style="padding-right:70px; font-size: 16px;">Last Page</p>
-    <p style="padding-left:70px; font-size: 16px;">Next Page</p>
+    <p style="padding-right:75px; font-size: 16px;">Previous Page</p>
+    <p style="padding-left:65px; font-size: 16px;">Next Page</p>
 </div>
 
 
