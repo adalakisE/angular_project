@@ -1,10 +1,9 @@
 import { Component, getDebugNode, HostListener, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { threadId } from 'worker_threads';
-import { Bugs } from '../bugs';
-import { BugsListComponent } from '../bugs-list/bugs-list.component';
+import { Bugs, Comment } from '../bugs';
+import { HttpClient } from '@angular/common/http';
 import { RestService, SampleComponentCanDeactivate } from '../rest.service';
 
 
@@ -17,8 +16,9 @@ import { RestService, SampleComponentCanDeactivate } from '../rest.service';
 export class SubmitBugComponent implements OnInit {
 
   constructor(private restService: RestService,
-    private route: ActivatedRoute,
-    private _router: Router) { }
+              private route: ActivatedRoute,
+              private _router: Router,
+              private fb: FormBuilder) { }
 
   myForm: FormGroup;
 
@@ -45,7 +45,10 @@ export class SubmitBugComponent implements OnInit {
 
   id: string = 'null';
 
-  //bugs: Bugs = new Bugs
+
+  get comments(){
+    return this.myForm.get('comments') as FormArray;
+  }
 
   bugs: Bugs = {
     id: 0,
@@ -63,7 +66,17 @@ export class SubmitBugComponent implements OnInit {
     }]
   }
 
+  get colors(){
+    return this.myForm.get('colors') as FormArray
+  }
+
   devPO: boolean = false;
+
+  fillComments(comments: Comment[]){
+    comments.forEach(comment => {
+      this.pushComments(comment.reporter, comment.description)
+    })
+  }
 
   ngOnInit(): void {
 
@@ -77,27 +90,24 @@ export class SubmitBugComponent implements OnInit {
 
         if (this.bugs.reporter === "DEV" || this.bugs.reporter == "PO") {
           this.devPO = true
+          console.log(this.devPO)
         }
         this.myForm.patchValue(
           this.bugs
         )
+        this.fillComments(data.comments)
       });
     }
 
-
-    this.myForm = new FormGroup({
-      title: new FormControl("", Validators.required),
-      description: new FormControl("", Validators.required),
-      priority: new FormControl(this.priorities, Validators.required),
-      reporter: new FormControl(this.reporters, Validators.required),
-      status: new FormControl(this.statuses),
+    this.myForm = this.fb.group({
+      title: [null, Validators.required],
+      description: [null, Validators.required],
+      priority: [null, Validators.required],
+      reporter: [null, Validators.required],
+      status: [null],
       
-      comments: new FormArray([]),
-      reporterComment: new FormControl(""),
-      descriptionComment: new FormControl(""),
-      idComment: new FormControl("")
-
-      // how can we declare name, comments and comment id as an object in an array??
+      comments: this.fb.array([])
+    
     });
 
     this.myForm.get('reporter').patchValue(null)
@@ -116,13 +126,13 @@ export class SubmitBugComponent implements OnInit {
  
   }
 
-  pushComments(){
-
-   // this.myForm.get('reporterComment').push(new FormGroup({}))
-   //fanis's video udemy on FormArray
+  pushComments(report?: string, desc?: string){
+  
+  this.comments.push(this.fb.group({
+    reporter: [report, ],
+    description: [desc, ],
+  }))
   }
-
-
 
 
   submitForm() {

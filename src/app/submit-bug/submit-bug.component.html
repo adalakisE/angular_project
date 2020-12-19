@@ -57,24 +57,30 @@
         </div>
 
         <div *ngIf="devPO" style="background-color: rgb(235, 235, 235); width: 30%; margin-left: 35%;">
-            <div class="text-center" >
-                <div class="mt-4"> 
-                    <label class="pt-2">Name</label><br>
-                    <input formControlName="name" type="text">
-                    <div class="warning" *ngIf="myForm.get('name').invalid && myForm.get('name').dirty">
+            <div *ngFor="let comment of comments.controls" [formGroup]="comment">
+                <p> Test this div </p>
+                <div class="text-center">
+                    <div class="mt-4">
+                        <label class="pt-2">Name</label><br>
+                        <input formControlName="reporter" type="text">
+                        
+                        <!-- <div class="warning" *ngIf="myForm.get('name').invalid && myForm.get('name').dirty">
                         Field is required
+                    </div> -->
                     </div>
-                </div>
-                <div class="mt-4 pb-4">
-                    <label>Comment</label><br>
-                    <input formControlName="comments" type="text">
-                    <div class="warning" *ngIf="myForm.get('comments').invalid && myForm.get('comments').dirty">
+                    <div class="mt-4 pb-4">
+                        <label>Comment</label><br>
+                        <input formControlName="description" type="text">
+                        <!-- <div class="warning" *ngIf="myForm.get('comments').invalid && myForm.get('comments').dirty">
                         Field is required
+                    </div> -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
     <div class="text-center mt-4">
         <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
         <br>
