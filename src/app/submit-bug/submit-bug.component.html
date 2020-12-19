@@ -98,7 +98,7 @@
                     </div>
                 </div>
             </div>
-            <img src="../../assets/images/chat.png" (click)="pushComments()" style="height: 50px; margin-left:80px; cursor: pointer; float: right;" title="Add comment">     
+            <img *ngIf="devPO" src="../../assets/images/chat.png" (click)="pushComments()" style="height: 50px; margin-left:80px; cursor: pointer; float: right;" title="Add comment">     
         </div>
 
     </table>
