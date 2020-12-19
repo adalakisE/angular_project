@@ -1,94 +1,116 @@
 <button type="button" class="btn btn-secondary ml-2 mt-3" [routerLink]="''">Back</button>
 <h1 class="text-center"> Submit new bug</h1>
-<!--(submit)="submitForm()"-->
+
+
 <form [formGroup]="myForm" (submit)="submitForm()">
-    <div class="text-center">
-        <div class="mt-4">
-            <label>Title </label><br>
-            <input formControlName="title" type="text">
-            <div class="warning" *ngIf="myForm.get('title').invalid && myForm.get('title').dirty">
-                Field is required
-            </div>
-        </div>
-        <div class="mt-4">
-            <label>Description </label><br>
-            <input formControlName="description" type="text">
-            <div class="warning" *ngIf="myForm.get('description').invalid && myForm.get('description').dirty">
-                Field is required
-            </div>
-        </div>
 
-        <div class="mt-4">
-            <label>Priority </label><br>
-            <select formControlName="priority">
 
-                <option [ngValue]="null" selected>Select</option>
-                <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
-                    {{priority.key}}
-                </option>
-            </select>
-            <div class="warning" *ngIf="myForm.get('priority').invalid && myForm.get('priority').dirty">
-                Field is required
-            </div>
-        </div>
-        <div class="mt-4">
-            <label>Reporter </label><br>
-            <select formControlName="reporter">
-                <option [ngValue]="null">Select</option>
-                <option *ngFor="let reporter of reporters" [ngValue]="reporter">
-                    {{reporter}}
-                </option>
-            </select>
-            <div class="warning" *ngIf="myForm.get('reporter').invalid && myForm.get('reporter').dirty">
-                Field is required
-            </div>
-        </div>
-        <div class="mt-4">
-            <label>Status </label><br>
-            <select formControlName="status">
-                <option [ngValue]="null">Select</option>
-                <option *ngFor="let status of statuses" [ngValue]="status">
-                    {{status}}
-                </option>
-            </select>
-            <div class="warning" *ngIf="myForm.get('status').invalid && myForm.get('status').dirty">
-                Field is required
-            </div>
-        </div>
+    <table class="d-flex justify-content-center" style="border-collapse: collapse; border-radius: 1em; overflow: hidden;">
 
-        <div *ngIf="devPO" style="background-color: rgb(235, 235, 235); width: 30%; margin-left: 35%;">
-            <div *ngFor="let comment of comments.controls" [formGroup]="comment">
-                <p> Test this div </p>
-                <div class="text-center">
-                    <div class="mt-4">
-                        <label class="pt-2">Name</label><br>
-                        <input formControlName="reporter" type="text">
-                        
-                        <!-- <div class="warning" *ngIf="myForm.get('name').invalid && myForm.get('name').dirty">
+        <div class="text-center">
+            <tr class="bg-dark text-white">
+                <div style="margin: 20px 100px 10px 100px;">
+                    <label>Title </label><br>
+                    <input formControlName="title" type="text" class="inputs">
+                    <div class="warning" *ngIf="myForm.get('title').invalid && myForm.get('title').dirty">
                         Field is required
-                    </div> -->
                     </div>
-                    <div class="mt-4 pb-4">
-                        <label>Comment</label><br>
-                        <input formControlName="description" type="text">
-                        <!-- <div class="warning" *ngIf="myForm.get('comments').invalid && myForm.get('comments').dirty">
+                </div>
+            </tr>
+            <tr class="bg-dark text-white">
+                <div style="margin: 10px 100px 10px 100px;">
+                    <label>Description </label><br>
+                    <input formControlName="description" type="text" class="inputs">
+                    <div class="warning" *ngIf="myForm.get('description').invalid && myForm.get('description').dirty">
+                        Field is required
+                    </div>
+                </div>
+            </tr>
+            <tr class="bg-dark text-white">
+                <div style="margin: 10px 100px 10px 100px;">
+                    <label>Priority </label><br>
+                    <select formControlName="priority" class="inputs" style="width: 148px;">
+
+                        <option [ngValue]="null" selected >Select</option>
+                        <option *ngFor="let priority of priorities | keyvalue" [ngValue]="priority.value">
+                            {{priority.key}}
+                        </option>
+                    </select>
+                    <div class="warning" *ngIf="myForm.get('priority').invalid && myForm.get('priority').dirty">
+                        Field is required
+                    </div>
+                </div>
+            </tr>
+            <tr class="bg-dark text-white">
+                <div style="margin: 10px 100px 10px 100px;">
+                    <label>Reporter </label><br>
+                    <select formControlName="reporter" class="inputs" style="width: 148px;">
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let reporter of reporters" [ngValue]="reporter">
+                            {{reporter}}
+                        </option>
+                    </select>
+                    <div class="warning" *ngIf="myForm.get('reporter').invalid && myForm.get('reporter').dirty">
+                        Field is required
+                    </div>
+                </div>
+            </tr>
+            <tr class="bg-dark text-white mb-5">
+                <div style="margin: 10px 100px 30px 100px;">
+                    <label>Status </label><br>
+                    <select formControlName="status" class="inputs">
+                        <option [ngValue]="null">Select</option>
+                        <option *ngFor="let status of statuses" [ngValue]="status">
+                            {{status}}
+                        </option>
+                    </select>
+                    <div class="warning" *ngIf="myForm.get('status').invalid && myForm.get('status').dirty">
+                        Field is required
+                    </div>
+                </div>
+            </tr>
+            <div *ngIf="devPO" style=" width: 30%; margin-top:50px">
+                
+                <h5 class="text-center"> Comments</h5>
+
+                <div *ngFor="let comment of comments.controls" [formGroup]="comment">
+                    
+                    <div class="text-center">
+                        <tr class="bg-dark text-white mb-5">
+                        <div style="margin: 20px 100px 10px 100px;">
+                            <label class="pt-2">Name</label><br>
+                            <input formControlName="reporter" type="text" class="inputs">
+
+                            <!-- <div class="warning" *ngIf="myForm.get('name').invalid && myForm.get('name').dirty">
                         Field is required
                     </div> -->
+                        </div>
+                    </tr>
+                    <tr class="bg-dark text-white mb-5">
+                        <div style="margin: 10px 100px 60px 100px;">
+                            <label>Comment</label><br>
+                            <input formControlName="description" type="text" class="inputs">
+                            <!-- <div class="warning" *ngIf="myForm.get('comments').invalid && myForm.get('comments').dirty">
+                        Field is required
+                    </div> -->
+                        </div>
+                    </tr>
                     </div>
                 </div>
             </div>
+            <img src="../../assets/images/chat.png" (click)="pushComments()" style="height: 50px; margin-left:80px; cursor: pointer; float: right;" title="Add comment">     
         </div>
-    </div>
 
-
+    </table>
     <div class="text-center mt-4">
-        <button class="btn btn-primary" [disabled]="!myForm.valid">Submit</button>
+        <button class="searchButton" [disabled]="!myForm.valid">Submit</button>
         <br>
         
     </div>
-    
 </form>
-<button class="btn btn-primary" (click)="pushComments()"> + </button>
+
+
+
 
 
 <!-- COMMENTS FORM -->

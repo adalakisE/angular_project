@@ -16,18 +16,18 @@ import { RestService, SampleComponentCanDeactivate } from '../rest.service';
 export class SubmitBugComponent implements OnInit {
 
   constructor(private restService: RestService,
-              private route: ActivatedRoute,
-              private _router: Router,
-              private fb: FormBuilder) { }
+    private route: ActivatedRoute,
+    private _router: Router,
+    private fb: FormBuilder) { }
 
   myForm: FormGroup;
 
-  @HostListener("window:beforeunload")  
- selloutcanDeactivate(): Observable<boolean> | boolean {  
-     return (  
-         !this.myForm.dirty  
-     );  
- } 
+  @HostListener("window:beforeunload")
+  selloutcanDeactivate(): Observable<boolean> | boolean {
+    return (
+      !this.myForm.dirty
+    );
+  }
 
   priorities = new Map([
     ["Minor", 1],
@@ -46,7 +46,7 @@ export class SubmitBugComponent implements OnInit {
   id: string = 'null';
 
 
-  get comments(){
+  get comments() {
     return this.myForm.get('comments') as FormArray;
   }
 
@@ -66,13 +66,13 @@ export class SubmitBugComponent implements OnInit {
     }]
   }
 
-  get colors(){
+  get colors() {
     return this.myForm.get('colors') as FormArray
   }
 
   devPO: boolean = false;
 
-  fillComments(comments: Comment[]){
+  fillComments(comments: Comment[]) {
     comments.forEach(comment => {
       this.pushComments(comment.reporter, comment.description)
     })
@@ -105,9 +105,9 @@ export class SubmitBugComponent implements OnInit {
       priority: [null, Validators.required],
       reporter: [null, Validators.required],
       status: [null],
-      
+
       comments: this.fb.array([])
-    
+
     });
 
     this.myForm.get('reporter').patchValue(null)
@@ -123,15 +123,15 @@ export class SubmitBugComponent implements OnInit {
       }
       this.myForm.get('status').updateValueAndValidity()
     })
- 
+
   }
 
-  pushComments(report?: string, desc?: string){
-  
-  this.comments.push(this.fb.group({
-    reporter: [report, ],
-    description: [desc, ],
-  }))
+  pushComments(report?: string, desc?: string) {
+
+    this.comments.push(this.fb.group({
+      reporter: [report,],
+      description: [desc,],
+    }))
   }
 
 
