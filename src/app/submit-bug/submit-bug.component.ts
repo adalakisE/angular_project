@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Bugs, Comment } from '../bugs';
 import { HttpClient } from '@angular/common/http';
 import { RestService, SampleComponentCanDeactivate } from '../rest.service';
-
+import { BaseComponent } from '../base-component';
 
 
 @Component({
@@ -13,7 +13,7 @@ import { RestService, SampleComponentCanDeactivate } from '../rest.service';
   templateUrl: './submit-bug.component.html',
   styleUrls: ['./submit-bug.component.scss']
 })
-export class SubmitBugComponent implements OnInit {
+export class SubmitBugComponent implements OnInit, BaseComponent {
 
   constructor(private restService: RestService,
     private route: ActivatedRoute,
@@ -28,6 +28,8 @@ export class SubmitBugComponent implements OnInit {
       !this.myForm.dirty
     );
   }
+
+  canDeactivate = () => false;
 
   priorities = new Map([
     ["Minor", 1],
@@ -146,6 +148,7 @@ export class SubmitBugComponent implements OnInit {
       console.log('This is a new bug')
       this.restService.addBug(bug).subscribe((result) => {
         console.log(result);
+        this.canDeactivate = () => true;
         this._router.navigate(['/'])
       });
 
@@ -153,6 +156,7 @@ export class SubmitBugComponent implements OnInit {
       console.log('I will update a bug')
       this.restService.updateBug(this.bugs.id, bug).subscribe((results) => {
         console.log(results)
+        this.canDeactivate = () => true;
         this._router.navigate(['/'])
       })
     }
