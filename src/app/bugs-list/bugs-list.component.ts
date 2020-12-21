@@ -19,6 +19,7 @@ export class BugsListComponent implements OnInit {
 
   searchForm: FormGroup;
   pageCounter:number = 0;
+  pageCounterEnd:number = 0;
   private ascending: boolean = true;
   private filterBy = 'title';
   filterQuery: string;
@@ -59,10 +60,15 @@ export class BugsListComponent implements OnInit {
       this.bugs = bugs;
       
       if(this.bugs[9] === undefined){
-        this.pageCounter=0;
+        console.log("end of pages🥳🥳")
+        this.pageCounterEnd=1;
+        if(this.pageCounter<0){
+          this.pageCounter=0;
+        }
       }
     });
   }
+
   filterUp(filterValue){
     if(this.filterBy == filterValue){
       
@@ -84,12 +90,20 @@ export class BugsListComponent implements OnInit {
   prevPage(){
     this.pageCounter--;
     if(this.pageCounter<0) this.pageCounter=0;
+    console.log(this.pageCounter+'😍😍')
     this.getAllBugs();
   }
 
   nextPage(){
-    this.pageCounter++;
+    if(this.pageCounter==0){
+      this.pageCounterEnd=0;
+    }
+    console.log("next page🥵🥵")
+    this.pageCounter = this.pageCounter + 1 - this.pageCounterEnd;
+    this.pageCounterEnd = 0;
+    //if(this.pageCounter<0) this.pageCounter=1;
     //if(this.bugs[0].length)
+    console.log(this.pageCounter+'😍😍')
     console.log(this.bugs[0])
 
  
